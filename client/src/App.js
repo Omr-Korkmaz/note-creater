@@ -45,7 +45,7 @@ const App = () => {
         </div>
         <div className="NotesContainer">
           {note.map((noteItem) => (
-            <Note singelNote={noteItem.content} />
+            <Note singelNote={noteItem} />
           ))}
         </div>
       </div>
