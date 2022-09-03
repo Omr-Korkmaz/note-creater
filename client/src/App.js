@@ -15,8 +15,14 @@ const App = () => {
       .get(`http://localhost:3001/getNotes`)
 
       .then((response) => {
-        setNotes(response.data[0].content);
+        if (isApiSubscribed) {
+          setNotes(response.data[0].content);
+        }
       });
+    return () => {
+      // cancel the subscription
+      isApiSubscribed = false;
+    };
   }, []);
 
   return (
