@@ -4,9 +4,10 @@ import axios from "axios";
 import ReactPlayer from "react-player";
 import logo from "./logo.png";
 import "./App.css";
+import Note from "./components/note/Note";
 
 const App = () => {
-  const [note, setNotes] = useState("");
+  const [note, setNotes] = useState([]);
 
   useEffect(() => {
     let isApiSubscribed = true;
@@ -16,9 +17,10 @@ const App = () => {
 
       .then((response) => {
         if (isApiSubscribed) {
-          setNotes(response.data[0].content);
+          setNotes(response.data);
         }
       });
+    console.log("note", note);
     return () => {
       // cancel the subscription
       isApiSubscribed = false;
@@ -42,24 +44,9 @@ const App = () => {
           <img src={logo} className="AppLogo" alt="logo" />
         </div>
         <div className="NotesContainer">
-          <div className="NotesContainerSection">
-            <span>
-              The main task is to fill this area with the notes which you can
-              fetch from
-            </span>{" "}
-            <a
-              href="http://localhost:3001/getnotes"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <b>http://localhost:3001/getnotes</b>
-            </a>
-          </div>
-          <div className="NotesContainerSection">{note}</div>
-          <div className="NotesContainerSection">
-            If you even manage to do that in time, start working on a way to add
-            new notes.
-          </div>
+          {note.map((noteItem) => (
+            <Note singelNote={noteItem.content} />
+          ))}
         </div>
       </div>
     </div>

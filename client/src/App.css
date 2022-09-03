@@ -6,11 +6,9 @@
   justify-content: center;
   align-items: center;
 
-  background-image: linear-gradient(
-    to bottom,
-    rgba(138, 195, 240, 0.2),
-    rgba(138, 195, 240, 0.1)
-  );
+  background-image: linear-gradient(to bottom,
+      rgba(138, 195, 240, 0.2),
+      rgba(138, 195, 240, 0.1));
 }
 
 .AppLogo {
