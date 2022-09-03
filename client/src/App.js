@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import ReactPlayer from "react-player";
 import logo from "./logo.png";
 import "./App.css";
 
 const App = () => {
+  const [note, setNotes] = useState("");
+
+  useEffect(() => {
+    let isApiSubscribed = true;
+
+    axios
+      .get(`http://localhost:3001/getNotes`)
+
+      .then((response) => {
+        setNotes(response.data[0].content);
+      });
+  }, []);
+
   return (
     <div className="App">
       <div className="MainRow">
@@ -35,9 +49,7 @@ const App = () => {
               <b>http://localhost:3001/getnotes</b>
             </a>
           </div>
-          <div className="NotesContainerSection">
-            If you manage do that in time, please style the notes.
-          </div>
+          <div className="NotesContainerSection">{note}</div>
           <div className="NotesContainerSection">
             If you even manage to do that in time, start working on a way to add
             new notes.
