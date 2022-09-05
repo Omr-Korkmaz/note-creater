@@ -35,9 +35,10 @@
     border-radius: 50%;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
     border: solid 5px #728d7d;
+    object-fit: cover;
 }
 
 .note-section__info__user {
     color: white;
-  
+
 }

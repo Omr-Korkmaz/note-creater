@@ -5,11 +5,18 @@ import ReactPlayer from "react-player";
 import logo from "./logo.png";
 import "./App.css";
 import Note from "./components/note/Note";
+import FormModal from "./components/formModal/FormModal";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const App = () => {
-  const [note, setNotes] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    getNotes();
+  }, []);
+
+  const getNotes = () => {
     let isApiSubscribed = true;
 
     axios
@@ -20,12 +27,40 @@ const App = () => {
           setNotes(response.data);
         }
       });
-    console.log("note", note);
+    console.log("notes", notes);
     return () => {
       // cancel the subscription
       isApiSubscribed = false;
     };
-  }, []);
+  };
+
+  const addNote = async (username, note, image) => {
+    let formData = new FormData();
+    formData.append("uploaded_file", image);
+
+    formData.append("username", username);
+    formData.append("note", note);
+
+    axios({
+      method: "post",
+      url: "http://localhost:3001/getNotes",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response);
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+    setOpenModal(false);
+    setTimeout(() => {
+      getNotes();
+    }, 300);
+
+  };
 
   return (
     <div className="App">
@@ -43,10 +78,24 @@ const App = () => {
           />
           <img src={logo} className="AppLogo" alt="logo" />
         </div>
+        {openModal && (
+          <FormModal
+            addNote={addNote}
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+          />
+        )}
         <div className="NotesContainer">
-          {note.map((noteItem) => (
-            <Note singelNote={noteItem} />
-          ))}
+          <AddCircleIcon
+            color="green"
+            fontSize="large"
+            onClick={() => setOpenModal(true)}
+          />
+          <div className="notes">
+            {notes.map((noteItem) => (
+              <Note singelNote={noteItem} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
