@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import ReactPlayer from "react-player";
 import logo from "./logo.png";
 import "./App.css";
 import Note from "./components/note/Note";
 import FormModal from "./components/formModal/FormModal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +19,6 @@ const App = () => {
 
     axios
       .get(`http://localhost:3001/getNotes`)
-
       .then((response) => {
         if (isApiSubscribed) {
           setNotes(response.data);
@@ -46,19 +43,12 @@ const App = () => {
       url: "http://localhost:3001/getNotes",
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
-    })
-      .then(function (response) {
-        //handle success
-        console.log(response);
-      })
-      .catch(function (response) {
-        //handle error
-        console.log(response);
-      });
+    }).then(response=> {
+      setNotes(response.data);
+      console.log("cevap ", response);
+    });
+
     setOpenModal(false);
-    setTimeout(() => {
-      getNotes();
-    }, 300);
 
   };
 

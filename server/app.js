@@ -39,8 +39,9 @@ app.get("/getnotes", function (req, res) {
   res.send(notes);
 });
 
-
 app.post("/getnotes", upload.single("uploaded_file"), function (req, res) {
+  console.log("file nam", req.file);
+  console.log(req.file, req.body);
   let fileType = req.file.mimetype.split("/")[1];
   console.log("filetype", fileType);
   let newFileName = req.file.filename + "." + fileType;
@@ -51,26 +52,24 @@ app.post("/getnotes", upload.single("uploaded_file"), function (req, res) {
     `./public/${newFileName}`,
     function () {
       console.log("callback");
+      const content = req.body.note;
+      const image = req.file;
+      const name = req.body.username;
+      console.log("TEXT", req.body);
+      console.log("resim", req.file);
+      const note = {
+        content: content,
+        user: {
+          name: name,
+          img: `http://localhost:3001/static/${image.filename}.${fileType}`,
+          // http://localhost:3001/static/5688ae21629c7330387a811ebde3c035.jpeg
+        },
+      };
+      notes.push(note);
+      res.send(notes);
     }
   );
-
-  const content = req.body.note;
-  const image = req.file;
-  const name = req.body.username;
-  console.log("TEXT", req.body);
-  console.log("resim", req.file);
-  const note = {
-    content: content,
-    user: {
-      name: name,
-      img: `http://localhost:3001/static/${image.filename}.jpeg`,
-      // http://localhost:3001/static/5688ae21629c7330387a811ebde3c035.jpeg
-    },
-  };
-  notes.push(note);
-  res.send(notes);
 });
-
 
 app.listen(3001, function () {
   console.log("Example app listening on port 3001!");

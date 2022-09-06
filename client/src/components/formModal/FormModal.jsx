@@ -5,10 +5,11 @@ import { TextField, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CloseIcon from "@mui/icons-material/Close";
 
-const FormModal = ({ addNote, open, onClose }) => {
+const FormModal = ({ addNote, onClose }) => {
   const [note, setNote] = useState("");
   const [username, setUsername] = useState("");
   const [image, setImage] = useState({});
+console.log(image)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ const FormModal = ({ addNote, open, onClose }) => {
             type="file"
             name="uploaded_file"
             onChange={(e) => setImage(e.target.files[0])}
+            
           />
           <TextField
             className="field"
