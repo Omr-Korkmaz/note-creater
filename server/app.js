@@ -62,7 +62,6 @@ app.post("/getnotes", upload.single("uploaded_file"), function (req, res) {
         user: {
           name: name,
           img: `http://localhost:3001/static/${image.filename}.${fileType}`,
-          // http://localhost:3001/static/5688ae21629c7330387a811ebde3c035.jpeg
         },
       };
       notes.push(note);

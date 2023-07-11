@@ -9,7 +9,7 @@ const FormModal = ({ addNote, onClose }) => {
   const [note, setNote] = useState("");
   const [username, setUsername] = useState("");
   const [image, setImage] = useState({});
-console.log(image)
+  console.log(image);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +37,6 @@ console.log(image)
             type="file"
             name="uploaded_file"
             onChange={(e) => setImage(e.target.files[0])}
-            
           />
           <TextField
             className="field"
